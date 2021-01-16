@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+flask-assignment1-main/venv
+flask-assignment1-main/_pycache_
