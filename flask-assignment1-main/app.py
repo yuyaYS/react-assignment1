@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 from flask import jsonify,make_response
 from flask_cors import CORS
+import random, string
 
 app = Flask(__name__)
 CORS(app)
@@ -46,6 +47,10 @@ def get_users():
 
    elif request.method == 'POST':
       userToAdd = request.get_json()
+      #add random id to object
+      for userToAdd in users['users_list']:
+         #if userToAdd.get('id')==0 #access by id and compare if id does not exsit
+            userToAdd['id']= random_name(6) #assin the rand value, but did not acces to index
       users['users_list'].append(userToAdd)
       resp = jsonify(success=True),201
       #resp = jsonify({"201 response"}),201
@@ -64,7 +69,7 @@ def get_usersById(id):
                   return user
               elif request.method == 'DELETE':
                   users['users_list'].remove(user)
-                  resp = jsonify(),204
+                  resp = jsonify({"Complete deleting"}),204
                   return resp
         res = jsonify({"could not fund the item given id"}),404
         return res
@@ -87,6 +92,10 @@ def filter_name(name):
             subdict['users_list'].append(user)
       return subdict
 
+
+
+def random_name(n):
+   return ''.join(random.choices(string.ascii_letters + string.digits, k=n))
 
 users = { 
    'users_list' :

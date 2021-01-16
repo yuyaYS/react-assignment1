@@ -46,9 +46,9 @@ function MyApp() {
         setCharacters(updated);
      }
 
-   function updateList(person) {
-      setCharacters([...characters, person]);
-    }
+   // function updateList(person) {
+   //    setCharacters([...characters, person]);
+   //  }
 
     async function fetchAll(){
       try {
@@ -72,12 +72,30 @@ function MyApp() {
        return false;
     }
  }
- function updateList(person) { 
+ async function makeDeleteCall(id){
+   try {
+      const response = await axios.delete('http://localhost:5000/users', id);
+      return response;
+   }
+   catch (error) {
+      console.log(error);
+      return false;
+   }
+}
+ function updateList(person,id) { 
   makePostCall(person).then( result => {
   if (result)
      setCharacters([...characters, person] );
   });
+  
+  makeDeleteCall(id).then( result => {
+   if (result)
+      setCharacters([...characters, id] );
+   });
+
 }
+
+
 
 }
 
